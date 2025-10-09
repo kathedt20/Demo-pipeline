@@ -1,40 +1,21 @@
 pipeline{
 
-    agent any
-    stages{
-        stage('clonar repositorio'){
+  agent any
 
+  stages{
 
-            steps{
+    stage('preparar'){
 
+        steps{
 
-                echo "📥 Clonando repositorio desde GitHub..."
-                git branch: 'main', url: 'https://github.com/kathedt20/Demo-pipeline.git'
-            }
-        }
-         stage('Ejecutar aplicación') {
-            steps {
-                echo "Ejecutando app.py..."
-                bat  'app.py > resultado.txt'
+            script{
+
+                def ramas = [main, develop, release]
+                ramas.each {rama -> echo "esta rama se llama: ${rama}"}
             }
         }
 
-        stage('Desplegar (simulado)') {
-            steps {
-                echo "Simulando despliegue..."
-                bat '''
-                if not exist Deploy mkdir Deploy
-                copy resultado.txt Deploy
-                '''
-            }
-        }
+    
     }
-     post {
-        success {
-            echo "Pipeline completado con éxito"
-        }
-        failure {
-            echo "Hubo un error durante la ejecución"
-        }
-    }
+  }
 }
