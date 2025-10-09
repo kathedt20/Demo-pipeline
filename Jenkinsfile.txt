@@ -10,7 +10,7 @@ pipeline{
 
             script{
 
-                def ramas = [main, develop, release]
+                def ramas = ['main', 'develop', 'release']
                 ramas.each {rama -> echo "esta rama se llama: ${rama}"}
             }
         }
